@@ -17,10 +17,12 @@ buttons.forEach((button) => {
     const buttonValue = event.target.innerText;
 
     if (buttonValue === "C") {
-      display.innerText = ""
+      display.innerText = "";
+      num1 = 0;
+      operator = "";
       return;
     }
-
+ 
     display.innerText += buttonValue;
   });
 });
