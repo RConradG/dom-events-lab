@@ -8,7 +8,6 @@ let num2;
 let output;
 let buttonValue;
 let operator;
-let calculatedNumber;
 let equals;
 
 /*------------------------ Cached Element References ------------------------*/
@@ -32,7 +31,10 @@ operatorEls.forEach((operator) => {
 
 /*-------------------------------- Functions --------------------------------*/
 function handleNumberButtonClick(event) {
-  buttonValue = event.target.textContent; //Possible Delete Me
+  if (output) { // allows user calculate another value without having to clear, after initial equal button press
+    clear();
+  }
+  buttonValue = event.target.textContent; 
   if (displayEl.innerText === "0") {
     displayEl.innerText = "";
     displayEl.innerText = buttonValue;
@@ -60,33 +62,27 @@ function handleOperatorClick(event) {
 }
 
 function handleEqualsClick() {
-  if (equals) {
+  num2 = convertArrayElementsToNumber(numArray);
+  if (num1 === undefined || num1 === null) {
+    displayEl.innerText = "undefined";
+  } else if (equals) { // allows user to continuously press equals and perform same operation
     num1 = output;
     calculate(num1, num2);
-  } else if ( (equals && !num1 && !num2 && buttonValue)) {
-    num1 = 0;
-    num2 = convertArrayElementsToNumber(numArray);
-    calculate(num1, num2);
-  } else if(!equals && !num1 && !num2) {
-    displayEl.innerText = "undefined";
   } else {
-    num2 = convertArrayElementsToNumber(numArray);
     calculate(num1, num2);
   }
   equals = true;
 }
 
-
 function clear() {
-  displayEl.innerText = "0";
   num1 = null;
   num2 = null;
   numArray = [];
   output = null;
   buttonValue = null;
   operator = null;
-  calculatedNumber = null;
   equals = false;
+  displayEl.innerText = "0";
 }
 
 function calculate(num1, num2) {
